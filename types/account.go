@@ -3,7 +3,7 @@ package types
 import (
 	"encoding/hex"
 
-	"github.com/prysmaticlabs/prysm/crypto/bls"
+	"github.com/prysmaticlabs/prysm/v5/crypto/bls"
 
 	"cosmossdk.io/math"
 

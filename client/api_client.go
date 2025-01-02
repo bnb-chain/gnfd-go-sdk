@@ -17,9 +17,10 @@ import (
 	"strings"
 	"time"
 
+	"google.golang.org/grpc"
+
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/rs/zerolog/log"
-	"google.golang.org/grpc"
 
 	hashlib "github.com/bnb-chain/greenfield-common/go/hash"
 	httplib "github.com/bnb-chain/greenfield-common/go/http"
@@ -211,25 +212,25 @@ func New(chainID string, endpoint string, option Option) (IClient, error) {
 		}
 	}
 	// register off-chain-auth pubkey to all sps
-	if option.OffChainAuthOption != nil {
-		if option.ForceToUseSpecifiedSpEndpointForDownloadOnly != "" {
-			return nil, errors.New("forceToUseSpecifiedSpEndpointForDownloadOnly option does not support OffChainAuthOption, please adjust option inputs and try again")
-		}
-		if option.OffChainAuthOption.Seed == "" || option.OffChainAuthOption.Domain == "" {
-			return nil, errors.New("seed and domain can't be empty in OffChainAuthOption")
-		}
-		c.offChainAuthOption = option.OffChainAuthOption
-		if option.OffChainAuthOption.ShouldRegisterPubKey {
-			for _, sp := range c.storageProviders {
-				registerResult, err := c.RegisterEDDSAPublicKey(sp.OperatorAddress.String(), sp.EndPoint.Scheme+"://"+sp.EndPoint.Host)
-				if err != nil {
-					log.Error().Msg(fmt.Sprintf("Fail to RegisterEDDSAPublicKey for sp : %s", sp.EndPoint))
-				}
-				log.Info().Msg(fmt.Sprintf("registerResult: %s", registerResult))
-
-			}
-		}
-	}
+	//if option.OffChainAuthOption != nil {
+	//	if option.ForceToUseSpecifiedSpEndpointForDownloadOnly != "" {
+	//		return nil, errors.New("forceToUseSpecifiedSpEndpointForDownloadOnly option does not support OffChainAuthOption, please adjust option inputs and try again")
+	//	}
+	//	if option.OffChainAuthOption.Seed == "" || option.OffChainAuthOption.Domain == "" {
+	//		return nil, errors.New("seed and domain can't be empty in OffChainAuthOption")
+	//	}
+	//	c.offChainAuthOption = option.OffChainAuthOption
+	//	if option.OffChainAuthOption.ShouldRegisterPubKey {
+	//		for _, sp := range c.storageProviders {
+	//			registerResult, err := c.RegisterEDDSAPublicKey(sp.OperatorAddress.String(), sp.EndPoint.Scheme+"://"+sp.EndPoint.Host)
+	//			if err != nil {
+	//				log.Error().Msg(fmt.Sprintf("Fail to RegisterEDDSAPublicKey for sp : %s", sp.EndPoint))
+	//			}
+	//			log.Info().Msg(fmt.Sprintf("registerResult: %s", registerResult))
+	//
+	//		}
+	//	}
+	//}
 
 	// register off-chain-auth-v2 pubkey to all sps
 	if option.OffChainAuthOptionV2 != nil {

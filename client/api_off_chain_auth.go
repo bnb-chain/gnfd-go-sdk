@@ -15,14 +15,14 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/crypto/blake2b"
+
 	"github.com/consensys/gnark-crypto/ecc/bn254/fr"
 	"github.com/consensys/gnark-crypto/ecc/bn254/fr/mimc"
-	"github.com/consensys/gnark-crypto/ecc/bn254/twistededwards"
 	"github.com/consensys/gnark-crypto/ecc/bn254/twistededwards/eddsa"
 	"github.com/ethereum/go-ethereum/accounts"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/rs/zerolog/log"
-	"golang.org/x/crypto/blake2b"
 
 	httplib "github.com/bnb-chain/greenfield-common/go/http"
 	"github.com/bnb-chain/greenfield-go-sdk/types"
@@ -398,7 +398,7 @@ const (
 )
 
 func generateKey(r io.Reader) (*eddsa.PrivateKey, error) {
-	c := twistededwards.GetEdwardsCurve()
+	//c := twistededwards.GetEdwardsCurve()
 
 	var (
 		randSrc = make([]byte, 32)
@@ -444,7 +444,7 @@ func generateKey(r io.Reader) (*eddsa.PrivateKey, error) {
 
 	var bscalar big.Int
 	bscalar.SetBytes(scalar[:])
-	pub.A.ScalarMul(&c.Base, &bscalar)
+	//pub.A.ScalarMul(&c.Base, &bscalar)
 
 	var res [sizeFr * 3]byte
 	pubkBin := pub.A.Bytes()
